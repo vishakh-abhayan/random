@@ -1,6 +1,13 @@
+html {
+  font-size: 100%;
+  box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
 body {
   margin: 0;
-}
-h1 {
-  color: blue;
+  padding: 0;
 }
