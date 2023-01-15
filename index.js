@@ -1,17 +1,16 @@
 const express = require("express");
+const qr = require("qr-image");
+
 const app = express();
-const port = 8000;
 
-app.use(express.static("public"));
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.get("/qr", (req, res) => {
+  const url = req.query.url;
+  const qr_svg = qr.image(url, { type: "svg" });
+  res.setHeader("Content-disposition", "attachment; filename=qrcode.svg");
+  res.setHeader("Content-type", "image/svg+xml");
+  qr_svg.pipe(res);
 });
 
-// app.get("/dinoname", async (req, res) => {
-//   res.send("hello");
-//   fetch("https://dinoipsum.com/api/?format=json&words=10&paragraphs=3")
-//     .then((response) => response.json())
-//     .then((data) => console.log(data))
-//     .catch((err) => console.error("Where did all the dinosaurs go?"));
-// });
+app.listen(3000, () => {
+  console.log("QR code generator API listening on port 3000!");
+});
